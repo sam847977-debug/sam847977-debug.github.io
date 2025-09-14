@@ -1,191 +1,151 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rimuru Wab</title>
-<style>
-  body, html {
-    margin: 0;
-    padding: 0;
-    background-color: black;
-    font-family: Arial, sans-serif;
-    color: white;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rimuru wab</title>
+    <style>
+        /* CSS สำหรับการจัดหน้าและสี */
+        body {
+            background-color: #000; /* พื้นหลังสีดำ */
+            color: #fff; /* สีข้อความสีขาว */
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-  .navbar {
-    background-color: #007BFF;
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 20px;
-  }
+        /* แถบนำทางด้านบน */
+        .navbar {
+            background-color: #007bff; /* สีน้ำเงิน */
+            display: flex;
+            justify-content: flex-end; /* จัดชิดขวา */
+            padding: 15px 20px;
+        }
 
-  .navbar button {
-    background-color: white;
-    color: #007BFF;
-    border: none;
-    padding: 8px 16px;
-    margin-left: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-  }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-  .navbar button:hover {
-    opacity: 0.8;
-  }
+        .navbar a:hover {
+            background-color: #0056b3;
+        }
 
-  .form-container, .welcome-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 90vh;
-    text-align: center;
-  }
+        /* กล่องฟอร์ม */
+        .form-container {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        .form-container form {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
 
-  .form-container input {
-    padding: 10px;
-    margin: 5px 0;
-    width: 250px;
-    border-radius: 5px;
-    border: none;
-  }
+        .form-container input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+        }
 
-  .form-container button {
-    padding: 10px 20px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #007BFF;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-  }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-  .form-container button:hover {
-    opacity: 0.8;
-  }
-
-  .welcome-page h1 {
-    font-size: 48px;
-    margin-bottom: 40px;
-  }
-
-  .welcome-page a {
-    color: #007BFF;
-    text-decoration: none;
-    font-size: 20px;
-  }
-
-  .welcome-page a:hover {
-    text-decoration: underline;
-  }
-
-</style>
+        /* หน้าที่แสดงหลังจากล็อกอิน */
+        .logged-in-page {
+            text-align: center;
+            padding-top: 50px;
+            display: none; /* ซ่อนหน้านี้ไว้ตอนแรก */
+        }
+        
+        .logged-in-page h1 {
+            font-size: 3em;
+        }
+        
+        .logged-in-page a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
 
-<div class="navbar">
-  <button id="registerBtn">ลงทะเบียน</button>
-  <button id="loginBtn">ล็อกอิน</button>
-  <button id="logoutBtn" style="display:none;">ออกจากระบบ</button>
-</div>
+    <div id="main-content">
+        <div class="navbar">
+            <a href="#" onclick="showForm('register')">ลงทะเบียน</a>
+            <a href="#" onclick="showForm('login')">ล็อกอิน</a>
+        </div>
 
-<!-- หน้า Login/Register -->
-<div class="form-container" id="formPage">
-  <h2 id="formTitle">ล็อกอิน</h2>
-  <input type="text" id="username" placeholder="ชื่อผู้ใช้">
-  <input type="password" id="password" placeholder="รหัสผ่าน">
-  <button id="submitBtn">ล็อกอิน</button>
-</div>
+        <div class="form-container" id="register-form" style="display: none;">
+            <form onsubmit="handleAuth(event, 'register')">
+                <h2>ลงทะเบียน</h2>
+                <input type="text" placeholder="ชื่อผู้ใช้" required>
+                <input type="password" placeholder="รหัสผ่าน" required>
+                <button type="submit">ลงทะเบียน</button>
+            </form>
+        </div>
 
-<!-- หน้า Welcome หลังล็อกอิน -->
-<div class="welcome-page" id="welcomePage" style="display:none;">
-  <h1>rimuru wab</h1>
-  <a href="https://vm.tiktok.com/ZSHnDQBWbpBvm-Fs10p/" target="_blank">คลิกเพื่อไป TikTok</a>
-</div>
+        <div class="form-container" id="login-form" style="display: none;">
+            <form onsubmit="handleAuth(event, 'login')">
+                <h2>ล็อกอิน</h2>
+                <input type="text" placeholder="ชื่อผู้ใช้" required>
+                <input type="password" placeholder="รหัสผ่าน" required>
+                <button type="submit">ล็อกอิน</button>
+            </form>
+        </div>
+    </div>
 
-<script>
-  const registerBtn = document.getElementById('registerBtn');
-  const loginBtn = document.getElementById('loginBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
-  const submitBtn = document.getElementById('submitBtn');
-  const formPage = document.getElementById('formPage');
-  const welcomePage = document.getElementById('welcomePage');
-  const usernameInput = document.getElementById('username');
-  const passwordInput = document.getElementById('password');
-  const formTitle = document.getElementById('formTitle');
+    <div class="logged-in-page" id="rimuru-page">
+        <h1>rimuru wab</h1>
+        <p>
+            <a href="https://vm.tiktok.com/ZSHnDQBWbpBvm-Fs10p/" target="_blank">ลิงก์ TikTok ที่คุณต้องการ</a>
+        </p>
+    </div>
 
-  let mode = 'login';
+    <script>
+        // ฟังก์ชัน JavaScript เพื่อจัดการการแสดงผลของหน้าและฟอร์ม
+        function showForm(formType) {
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'none';
+            
+            if (formType === 'register') {
+                document.getElementById('register-form').style.display = 'block';
+            } else if (formType === 'login') {
+                document.getElementById('login-form').style.display = 'block';
+            }
+        }
 
-  // เปลี่ยนเป็นโหมดลงทะเบียน
-  registerBtn.addEventListener('click', () => {
-    mode = 'register';
-    formTitle.textContent = 'ลงทะเบียน';
-    submitBtn.textContent = 'ลงทะเบียน';
-  });
-
-  // เปลี่ยนเป็นโหมดล็อกอิน
-  loginBtn.addEventListener('click', () => {
-    mode = 'login';
-    formTitle.textContent = 'ล็อกอิน';
-    submitBtn.textContent = 'ล็อกอิน';
-  });
-
-  // กดปุ่ม submit
-  submitBtn.addEventListener('click', () => {
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
-
-    if(!username || !password){
-      alert('กรุณากรอกข้อมูลให้ครบ');
-      return;
-    }
-
-    if(mode === 'register'){
-      if(localStorage.getItem(username)){
-        alert('ชื่อผู้ใช้นี้มีอยู่แล้ว');
-      } else {
-        localStorage.setItem(username, password);
-        alert('ลงทะเบียนสำเร็จ!');
-        showWelcome(username);
-      }
-    } else {
-      const storedPassword = localStorage.getItem(username);
-      if(storedPassword && storedPassword === password){
-        alert('เข้าสู่ระบบสำเร็จ!');
-        showWelcome(username);
-      } else {
-        alert('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
-      }
-    }
-  });
-
-  // ฟังก์ชันแสดงหน้า Welcome
-  function showWelcome(username){
-    formPage.style.display = 'none';
-    welcomePage.style.display = 'flex';
-    logoutBtn.style.display = 'inline-block';
-    registerBtn.style.display = 'none';
-    loginBtn.style.display = 'none';
-  }
-
-  // ออกจากระบบ
-  logoutBtn.addEventListener('click', () => {
-    welcomePage.style.display = 'none';
-    formPage.style.display = 'flex';
-    logoutBtn.style.display = 'none';
-    registerBtn.style.display = 'inline-block';
-    loginBtn.style.display = 'inline-block';
-    usernameInput.value = '';
-    passwordInput.value = '';
-    mode = 'login';
-    formTitle.textContent = 'ล็อกอิน';
-    submitBtn.textContent = 'ล็อกอิน';
-  });
-
-</script>
+        function handleAuth(event, type) {
+            event.preventDefault(); // ป้องกันการรีเฟรชหน้า
+            
+            if (type === 'register') {
+                alert('ลงทะเบียนสำเร็จ!');
+            } else if (type === 'login') {
+                alert('ล็อกอินสำเร็จ!');
+            }
+            
+            // เปลี่ยนหน้าหลังจากล็อกอิน/ลงทะเบียน
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('rimuru-page').style.display = 'block';
+        }
+    </script>
 
 </body>
 </html>
