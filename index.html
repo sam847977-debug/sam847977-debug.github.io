@@ -5,121 +5,151 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rimuru Wab</title>
 <style>
-  body {
+  body, html {
     margin: 0;
-    font-family: Arial, sans-serif;
+    padding: 0;
     background-color: black;
+    font-family: Arial, sans-serif;
     color: white;
   }
 
-  /* แถบบน */
-  .top-bar {
-    background-color: #1e90ff;
-    padding: 15px 20px;
+  /* แถบด้านบน */
+  .navbar {
+    background-color: #007BFF; /* น้ำเงิน */
     display: flex;
     justify-content: flex-end;
-    gap: 15px;
+    padding: 10px 20px;
   }
 
-  .top-bar button {
+  .navbar button {
     background-color: white;
-    color: #1e90ff;
+    color: #007BFF;
     border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
+    padding: 8px 16px;
+    margin-left: 10px;
     cursor: pointer;
     font-weight: bold;
+    border-radius: 5px;
   }
 
-  .top-bar button:hover {
-    background-color: #f0f0f0;
+  .navbar button:hover {
+    opacity: 0.8;
   }
 
-  /* เนื้อหากลาง */
-  .content {
-    height: calc(100vh - 60px);
+  /* หน้าล็อกอิน/ลงทะเบียน */
+  .form-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+  }
+
+  .form-container input {
+    padding: 10px;
+    margin: 5px 0;
+    width: 250px;
+    border-radius: 5px;
+    border: none;
+  }
+
+  .form-container button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .form-container button:hover {
+    opacity: 0.8;
+  }
+
+  /* หน้าหลังล็อกอิน */
+  .welcome-page {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
     text-align: center;
   }
 
-  h1 {
-    font-size: 3em;
-    margin: 20px 0;
+  .welcome-page h1 {
+    font-size: 48px;
+    margin-bottom: 40px;
   }
 
-  /* ซ่อนหน้า */
-  .hidden {
-    display: none;
-  }
-
-  /* ลิงก์หน้า rimuru wab */
-  .link-container a {
-    color: #1e90ff;
-    font-size: 1.5em;
+  .welcome-page a {
+    color: #007BFF;
     text-decoration: none;
+    font-size: 20px;
   }
 
-  .link-container a:hover {
+  .welcome-page a:hover {
     text-decoration: underline;
   }
 </style>
 </head>
 <body>
 
-<!-- หน้าแรก -->
-<div id="home">
-  <div class="top-bar">
-    <button onclick="signup()">ลงทะเบียน</button>
-    <button onclick="login()">ล็อกอิน</button>
+  <!-- แถบด้านบน -->
+  <div class="navbar">
+    <button id="registerBtn">ลงทะเบียน</button>
+    <button id="loginBtn">ล็อกอิน</button>
   </div>
 
-  <div class="content">
-    <h1>ยินดีต้อนรับ!</h1>
+  <!-- หน้า Login/Register -->
+  <div class="form-container" id="formPage">
+    <input type="text" id="username" placeholder="ชื่อผู้ใช้">
+    <input type="password" id="password" placeholder="รหัสผ่าน">
+    <button id="submitBtn">ยืนยัน</button>
   </div>
-</div>
 
-<!-- หน้าหลังล็อกอิน -->
-<div id="main" class="hidden">
-  <div class="content">
+  <!-- หน้าหลังล็อกอิน -->
+  <div class="welcome-page" id="welcomePage">
     <h1>rimuru wab</h1>
-    <div class="link-container">
-      <a href="https://vm.tiktok.com/ZSHnDQBWbpBvm-Fs10p/" target="_blank">ไปยัง TikTok</a>
-    </div>
+    <a href="https://vm.tiktok.com/ZSHnDQBWbpBvm-Fs10p/" target="_blank">คลิกเพื่อไป TikTok</a>
   </div>
-</div>
 
 <script>
-function signup() {
-  const username = prompt("ตั้งชื่อผู้ใช้:");
-  const password = prompt("ตั้งรหัสผ่าน:");
-  
-  if(username && password) {
-    alert("สมัครสำเร็จ! 🎉");
-    showMain();
-  } else {
-    alert("กรอกข้อมูลให้ครบครับ 😅");
-  }
-}
+  const registerBtn = document.getElementById('registerBtn');
+  const loginBtn = document.getElementById('loginBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const formPage = document.getElementById('formPage');
+  const welcomePage = document.getElementById('welcomePage');
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
 
-function login() {
-  const username = prompt("กรุณากรอกชื่อผู้ใช้:");
-  const password = prompt("กรุณากรอกรหัสผ่าน:");
-  
-  if(username && password) {
-    alert("ล็อกอินสำเร็จ! 👏");
-    showMain();
-  } else {
-    alert("กรอกข้อมูลให้ครบครับ 😅");
-  }
-}
+  let mode = 'login'; // โหมดเริ่มต้น
 
-function showMain() {
-  document.getElementById('home').classList.add('hidden');
-  document.getElementById('main').classList.remove('hidden');
-}
+  registerBtn.addEventListener('click', () => {
+    mode = 'register';
+    alert('โหมดลงทะเบียน: กรอกข้อมูลแล้วกดยืนยัน');
+  });
+
+  loginBtn.addEventListener('click', () => {
+    mode = 'login';
+    alert('โหมดล็อกอิน: กรอกข้อมูลแล้วกดยืนยัน');
+  });
+
+  submitBtn.addEventListener('click', () => {
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    if(username === '' || password === '') {
+      alert('กรุณากรอกข้อมูลให้ครบ');
+      return;
+    }
+
+    // สำหรับสาธิต: ไม่ตรวจสอบฐานข้อมูลจริง
+    alert(${mode === 'login' ? 'เข้าสู่ระบบ' : 'ลงทะเบียน'}สำเร็จ!);
+    formPage.style.display = 'none';
+    welcomePage.style.display = 'flex';
+  });
 </script>
 
 </body>
