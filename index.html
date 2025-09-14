@@ -58,6 +58,41 @@
 
     <!-- หัวข้อใหญ่ -->
     <h1>rimuru wab</h1>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script>
+  // สมัครด้วยอีเมล
+  function signUp() {
+    const email = prompt("กรอกอีเมล");
+    const password = prompt("กรอกรหัสผ่าน");
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(userCredential => alert("สมัครเรียบร้อย!"))
+      .catch(error => alert(error.message));
+  }
+
+  // ล็อกอินด้วยอีเมล
+  function logIn() {
+    const email = prompt("กรอกอีเมล");
+    const password = prompt("กรอกรหัสผ่าน");
+    auth.signInWithEmailAndPassword(email, password)
+      .then(userCredential => alert("ล็อกอินสำเร็จ!"))
+      .catch(error => alert(error.message));
+  }
+
+  // ล็อกอินด้วย Facebook
+  function logInWithFacebook() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    auth.signInWithPopup(provider)
+      .then(result => alert("ล็อกอินด้วย Facebook สำเร็จ!"))
+      .catch(error => alert(error.message));
+  }
+</script>
+    <div class="navbar">
+    <button onclick="signUp()">สมัคร</button>
+    <button onclick="logIn()">ล็อกอิน</button>
+    <button onclick="logInWithFacebook()">Facebook</button>
+</div>
 
 </body>
 </html>
