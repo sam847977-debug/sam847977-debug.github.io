@@ -1,64 +1,67 @@
- <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rimuru.server.com</title>
-    <link rel="stylesheet" href="style.css">
+    <title>ฟอร์มลงทะเบียน</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            width: 300px;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        .form-container input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background: #4facfe;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .form-container button:hover {
+            background: #00f2fe;
+        }
+    </style>
 </head>
 <body>
-
-    <header>
-        <div class="logo">
-            <h1>hattakorn is my name</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section id="about">
-        <h2>who is my</h2>
-     <img src="images/picture.jpg" alt="https://www.google.com/url?sa=i&url=https%3A%2F%2Fprintler.com%2Fuk%2Fposter%2F150101%2F&psig=AOvVaw03nEEHSaUwj0-ysNV5o1nH&ust=1757931794828000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCPjotbiE2I8DFQAAAAAdAAAAABAE">
-        <p>I'm a passionate web developer with a knack for creating beautiful and functional websites. I specialize in front-end development using HTML, CSS, and JavaScript. I'm always eager to learn new technologies and improve my skills.</p>
-    </section>
-
-    <hr>
-
-    <section id="projects">
-        <h2>My Projects</h2>
-        <div class="project-card">
-            <h3>Project One</h3>
-            <p>A brief description of your first project. Talk about the technologies used and what you learned.</p>
-            <a href="#">View Project</a>
-        </div>
-        <div class="project-card">
-            <h3>Project Two</h3>
-            <p>A brief description of your second project. Describe its purpose and key features.</p>
-            <a href="#">View Project</a>
-        </div>
-    </section>
-
-    <hr>
-
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <p>Feel free to reach out to me via email or connect with me on social media.</p>
-        <div class="social-links">
-            <a href="mailto:your.email@example.com">Email</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">GitHub</a>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Your Name. All Rights Reserved.</p>
-    </footer>
-
-    <script src="script.js"></script>
+    <div class="form-container">
+        <h2>ลงทะเบียน</h2>
+        <form>
+            <input type="text" placeholder="กรอกชื่อของคุณ">
+            <input type="email" placeholder="กรอกอีเมลของคุณ">
+            <input type="password" placeholder="กรอกรหัสผ่าน">
+            <button type="submit">ส่งข้อมูล</button>
+        </form>
+    </div>
 </body>
 </html>
