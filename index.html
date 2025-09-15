@@ -5,52 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ลงชื่อเข้าใช้ Roblox</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       background-color: #1c1c1c;
       color: white;
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
-      text-align: center;
     }
 
     header {
       background-color: #000;
-      padding: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 8px 12px;
     }
 
-    header button {
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo svg {
+      margin-right: 10px;
+    }
+
+    .header-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
       background-color: #007bff;
       color: white;
       border: none;
-      padding: 8px 16px;
-      margin: 0 5px;
-      cursor: pointer;
+      padding: 6px 16px;
       border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    header button:nth-child(2) {
-      background-color: #333;
+    .btn-outline {
+      background-color: #000;
+      color: white;
+      border: 2px solid #444;
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .search-icon {
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
     }
 
     nav {
       background-color: #111;
-      padding: 10px;
       display: flex;
       justify-content: center;
-      gap: 15px;
-      font-size: 14px;
+      gap: 30px;
+      padding: 10px 0;
+      font-size: 15px;
     }
 
     .container {
       max-width: 400px;
-      margin: 50px auto;
+      margin: 40px auto;
       background-color: #2a2a2a;
       padding: 20px;
       border-radius: 10px;
+      text-align: center;
     }
 
     .container h2 {
@@ -99,6 +132,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
+      padding: 20px 10px;
     }
 
     a {
@@ -109,14 +143,22 @@
 </head>
 <body>
 
+  <!-- Header -->
   <header>
-    <div style="margin-left: 10px;"><img src="" alt="" width="30"></div>
-    <div>
-      <button>ลงทะเบียน</button>
-      <button>ลงชื่อเข้าใช้</button>
+    <div class="logo">
+      <!-- โลโก้ Roblox SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 512 512" fill="white">
+        <path d="M109.1 32L32 403.2 403.2 480 480 109.1 109.1 32zM335.1 335.1l-158.2-34.6 34.6-158.2 158.2 34.6-34.6 158.2z"/>
+      </svg>
+    </div>
+    <div class="header-buttons">
+      <button class="btn-primary">ลงทะเบียน</button>
+      <button class="btn-outline">ลงชื่อเข้าใช้</button>
+      <button class="search-icon" title="ค้นหา">🔍</button>
     </div>
   </header>
 
+  <!-- Menu -->
   <nav>
     <div>อันดับ</div>
     <div>มาร์เก็ตเพลส</div>
@@ -124,6 +166,7 @@
     <div>Robux</div>
   </nav>
 
+  <!-- Login Box -->
   <div class="container">
     <h2>ลงชื่อเข้าใช้ Roblox</h2>
     <input type="text" id="username" placeholder="ชื่อผู้ใช้/อีเมล/หมายเลขโทรศัพท์">
@@ -137,6 +180,7 @@
     <div style="margin-top: 15px;">ยังไม่มีบัญชีใช่ไหม? <a href="#">ลงทะเบียน</a></div>
   </div>
 
+  <!-- Footer -->
   <footer>
     <a href="#">เกี่ยวกับเรา</a>
     <a href="#">งาน</a>
@@ -150,6 +194,7 @@
     <a href="#">ตัวเลือกสำหรับความเป็นส่วนตัวของคุณ</a>
   </footer>
 
+  <!-- Script -->
   <script>
     function login() {
       const username = document.getElementById('username').value;
