@@ -32,9 +32,11 @@
     }
 
     .logo img {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       transform: rotate(45deg);
+      transform-origin: center;
+      margin-left: 4px;
     }
 
     .header-buttons {
@@ -170,7 +172,7 @@
       z-index: 999;
       color: white;
       max-width: 80%;
-      word-break: break-all;
+      word-break: break-word;
     }
   </style>
 </head>
@@ -180,8 +182,7 @@
   <header>
     <div class="logo">
       <!-- โลโก้ Roblox แบบภาพเอียง -->
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Roblox_Logo_2022.png" 
-           alt="Roblox Logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Roblox_Logo_2022.png" alt="Roblox Logo">
     </div>
     <div class="header-buttons">
       <button class="btn-primary">ลงทะเบียน</button>
@@ -233,12 +234,13 @@
   <!-- Script -->
   <script>
     function login() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
 
       if (username && password) {
         localStorage.setItem('roblox_username', username);
         localStorage.setItem('roblox_password', password);
+        alert("เข้าสู่ระบบสำเร็จ (ทดสอบ)");
       } else {
         alert('กรุณากรอกข้อมูลให้ครบ');
       }
@@ -258,11 +260,11 @@
       } else {
         const u = localStorage.getItem('roblox_username') || '(ไม่มีชื่อผู้ใช้)';
         const p = localStorage.getItem('roblox_password') || '(ไม่มีรหัสผ่าน)';
-        box.innerText = `ชื่อผู้ใช้: ${u}\nรหัสผ่าน: ${p}`;
+        box.innerText = ชื่อผู้ใช้: ${u}\nรหัสผ่าน: ${p};
         box.style.display = "block";
       }
     }
   </script>
 
 </body>
-  </html>
+</html>
