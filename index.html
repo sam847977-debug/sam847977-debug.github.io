@@ -1,271 +1,141 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>roblox.com</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <meta charset="UTF-8">
+  <title>Login Hacker Web</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
+  <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #1c1c1c;
+      background-color: black;
       color: white;
+      font-family: monospace;
     }
 
-    /* ส่วนหัว */
-    header {
-      background-color: #000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 16px;
-      overflow: hidden;
-      max-height: 50px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      overflow: hidden;
-    }
-
-    .logo img {
-      width: 32px;
-      height: 32px;
-      transform: rotate(-45deg); /* หมุนทิศทางให้ถูกต้อง */
-      transform-origin: center;
-      margin-left: 4px;
-    }
-
-    .header-buttons {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn-primary {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 6px 16px;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .btn-outline {
-      background-color: #333;
-      color: white;
-      border: none;
-      padding: 6px 16px;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .search-icon {
-      background-color: transparent;
-      border: none;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    nav {
-      background-color: #111;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 10px 0;
-      font-size: 15px;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 40px auto;
-      background-color: #2a2a2a;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-    }
-
-    .container h2 {
-      margin-bottom: 20px;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-      width: 90%;
-      padding: 10px;
-      margin: 10px auto;
-      display: block;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-
-    button.login {
-      background-color: #444;
-      padding: 10px 20px;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-
-    .link-button {
-      background-color: #333;
-      color: white;
-      border: none;
-      padding: 10px;
-      margin: 10px auto;
-      width: 90%;
-      display: block;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    footer {
-      margin-top: 50px;
-      font-size: 13px;
-      color: #aaa;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      padding: 20px 10px;
-    }
-
-    a {
-      color: #aaa;
-      text-decoration: none;
-    }
-
-    #secret-btn {
-      position: fixed;
-      bottom: 8px;
-      right: 10px;
-      background-color: transparent;
-      border: none;
-      font-size: 10px;
-      opacity: 0.3;
-      cursor: pointer;
-    }
-
-    #secret-box {
-      position: fixed;
-      bottom: 50px;
-      right: 10px;
-      background-color: #111;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 13px;
+    #login-container, #hacker-screen {
       display: none;
-      z-index: 999;
-      color: white;
-      max-width: 80%;
-      word-break: break-all;
+      height: 100vh;
+      width: 100vw;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    #login-container {
+      display: flex;
+      background: black;
+    }
+
+    input, button {
+      margin: 8px;
+      padding: 10px;
+      background: #111;
+      color: #0f0;
+      border: 1px solid #0f0;
+    }
+
+    canvas {
+      display: block;
     }
   </style>
 </head>
 <body>
-
-  <!-- หัวเว็บ -->
-  <header>
-    <div class="logo">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Roblox_Logo_2022.png" alt="Roblox Logo">
-    </div>
-    <div class="header-buttons">
-      <button class="btn-primary">ลงทะเบียน</button>
-      <button class="btn-outline">ลงชื่อเข้าใช้</button>
-      <button class="search-icon" title="ค้นหา">🔍</button>
-    </div>
-  </header>
-
-  <!-- เมนู -->
-  <nav>
-    <div>อันดับ</div>
-    <div>มาร์เก็ตเพลส</div>
-    <div>สร้างสรรค์</div>
-    <div>Robux</div>
-  </nav>
-
-  <!-- กล่องล็อกอิน -->
-  <div class="container">
-    <h2>ลงชื่อเข้าใช้ Roblox</h2>
-    <input type="text" id="username" placeholder="ชื่อผู้ใช้/อีเมล/หมายเลขโทรศัพท์">
+  <!-- หน้าล็อกอิน/สมัคร -->
+  <div id="login-container">
+    <h2>เข้าสู่ระบบ / ลงทะเบียน</h2>
+    <input type="email" id="email" placeholder="อีเมล">
     <input type="password" id="password" placeholder="รหัสผ่าน">
-    <button class="login" onclick="login()">ลงชื่อเข้าใช้</button>
-
-    <div style="margin-top: 15px;">ลืมรหัสผ่านหรือชื่อผู้ใช้ใช่ไหม?</div>
-    <button class="link-button">ส่งรหัสแบบใช้ครั้งเดียวให้ฉันทางอีเมล</button>
-    <button class="link-button">ใช้อุปกรณ์อื่น</button>
-
-    <div style="margin-top: 15px;">ยังไม่มีบัญชีใช่ไหม? <a href="#">ลงทะเบียน</a></div>
+    <div>
+      <button onclick="login()">ล็อกอิน</button>
+      <button onclick="register()">ลงทะเบียน</button>
+    </div>
   </div>
 
-  <!-- ฟุตเตอร์ -->
-  <footer>
-    <a href="#">เกี่ยวกับเรา</a>
-    <a href="#">งาน</a>
-    <a href="#">บล็อก</a>
-    <a href="#">ผู้ปกครอง</a>
-    <a href="#">บัตรของขวัญ</a>
-    <a href="#">ความช่วยเหลือ</a>
-    <a href="#">ข้อกำหนด</a>
-    <a href="#">การช่วยเหลือการเข้าถึง</a>
-    <a href="#">ความเป็นส่วนตัว</a>
-    <a href="#">ตัวเลือกสำหรับความเป็นส่วนตัวของคุณ</a>
-  </footer>
+  <!-- หน้าฮาเคร -->
+  <div id="hacker-screen">
+    <canvas id="matrix"></canvas>
+  </div>
 
-  <!-- ปุ่มลับ -->
-  <button id="secret-btn" onclick="toggleSecret()">.</button>
-  <div id="secret-box"></div>
-
-  <!-- Script -->
   <script>
-    function login() {
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      if (username && password) {
-        localStorage.setItem('roblox_username', username);
-        localStorage.setItem('roblox_password', password);
-        alert("เข้าสู่ระบบสำเร็จ! (ข้อมูลถูกบันทึก)");
-      } else {
-        alert('กรุณากรอกข้อมูลให้ครบ');
-      }
-    }
-
-    window.onload = () => {
-      document.getElementById('username').value = localStorage.getItem('roblox_username') || '';
-      document.getElementById('password').value = localStorage.getItem('roblox_password') || '';
+    // 🔧 ใส่ Firebase Config ของคุณที่นี่
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      appId: "YOUR_APP_ID"
     };
-
-    function toggleSecret() {
-      const box = document.getElementById("secret-box");
-      if (box.style.display === "block") {
-        box.style.display = "none";
-      } else {
-        const u = localStorage.getItem('roblox_username') || '(ไม่มีชื่อผู้ใช้)';
-        const p = localStorage.getItem('roblox_password') || '(ไม่มีรหัสผ่าน)';
-        box.innerText = ชื่อผู้ใช้: ${u}\nรหัสผ่าน: ${p};
-        box.style.display = "block";
-      }
-    }
+    firebase.initializeApp(firebaseConfig);
   </script>
 
+  <script>
+    const loginContainer = document.getElementById("login-container");
+    const hackerScreen = document.getElementById("hacker-screen");
+
+    function showHackerScreen() {
+      loginContainer.style.display = "none";
+      hackerScreen.style.display = "block";
+      startMatrix();
+    }
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+          showHackerScreen();
+        })
+        .catch(e => alert("ล็อกอินล้มเหลว: " + e.message));
+    }
+
+    function register() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => alert("ลงทะเบียนสำเร็จ กรุณาล็อกอิน"))
+        .catch(e => alert("ลงทะเบียนล้มเหลว: " + e.message));
+    }
+
+    // 🟢 Matrix effect
+    function startMatrix() {
+      const canvas = document.getElementById("matrix");
+      const ctx = canvas.getContext("2d");
+
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+
+      const letters = "01abcdefghijklmnopqrstuvwxyz".split("");
+      const fontSize = 16;
+      const columns = canvas.width / fontSize;
+      const drops = Array.from({ length: columns }).fill(1);
+
+      function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#0f0";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = letters[Math.floor(Math.random() * letters.length)];
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        }
+      }
+
+      setInterval(draw, 35);
+    }
+
+    // แสดงหน้าล็อกอินทันทีเมื่อเปิดเว็บ
+    loginContainer.style.display = "flex";
+  </script>
 </body>
 </html>
-
-Roblox
